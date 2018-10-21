@@ -4,7 +4,8 @@ import {
     AUTH_USER,
     UNAUTH_USER,
     AUTH_ERROR,
-    FETCH_DRINK
+    FETCH_DRINK,
+    ADD_CONSUMED
 } from './types';
 
 const ROOT_URL = 'http://test.stevethedeveloper.com/api';
@@ -70,6 +71,22 @@ export const fetchDrink = () => {
                 type: FETCH_DRINK,
                 payload: response.data
              });
+        });
+    };
+};
+
+export const addConsumed = (drink_id, servings_consumed) => {
+    return (dispatch) => {
+        // Submit consumed record
+        axios.post(`${ROOT_URL}/consumed`, { drink_id, servings_consumed }, {
+              headers: { Authorization: 'Bearer' + localStorage.getItem('token') }
+        })
+        .then(response => {
+            dispatch({ type: ADD_CONSUMED });
+            History.push('/');
+        })
+        .catch(err => {
+            //dispatch(authError(err.response.data.error));
         });
     };
 };

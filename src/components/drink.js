@@ -10,7 +10,7 @@ class Drink extends PureComponent {
 
     renderDrink() {
         return this.props.drinks.map(drink => {
-            return <li key={drink.name}>{drink.name}</li>;
+            return <li onClick={actions.addConsumed(drink.id, drink.servings)} key={drink.name}>{drink.name}</li>;
         })
     }
 
