@@ -1,16 +1,18 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
+import History from '../../history.js';
 
 class Signout extends PureComponent {
 
     componentWillMount() {
         this.props.signoutUser();
+        History.push('/signin')
     }
 
     render() {
         return (
-            <div>Sorry to see you go ...</div>
+            <div>Signed out...</div>
         )
     }
 }

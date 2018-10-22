@@ -5,7 +5,7 @@ import {
     UNAUTH_USER,
     AUTH_ERROR,
     FETCH_DRINK,
-    ADD_CONSUMED
+    FETCH_CONSUMED
 } from './types';
 
 const ROOT_URL = 'http://test.stevethedeveloper.com/api';
@@ -34,10 +34,10 @@ export const signinUser = ({ email, password }) => {
     };
 };
 
-export const signupUser = ({ email, password }) => {
+export const signupUser = ({ user_name, email, password }) => {
     return (dispatch) => {
         // submit email/password to the server
-        axios.post(`${ROOT_URL}/signup`, { email, password })
+        axios.post(`${ROOT_URL}/register`, { user_name, email, password })
             .then(response => {
                 dispatch({ type: AUTH_USER });
                 localStorage.setItem('token', response.data.token);
@@ -75,6 +75,20 @@ export const fetchDrink = () => {
     };
 };
 
+export function fetchConsumed() {
+    return (dispatch) => {
+        axios.get(ROOT_URL + '/get_user_consumed', {
+            headers: { Authorization: 'Bearer' + localStorage.getItem('token') }
+        })
+        .then(response =>{
+            dispatch({
+                type: FETCH_CONSUMED,
+                payload: response.data.user.consumed_total
+             });
+        });
+    };
+};
+
 export const addConsumed = (drink_id, servings_consumed) => {
     return (dispatch) => {
         // Submit consumed record
@@ -82,8 +96,9 @@ export const addConsumed = (drink_id, servings_consumed) => {
               headers: { Authorization: 'Bearer' + localStorage.getItem('token') }
         })
         .then(response => {
-            dispatch({ type: ADD_CONSUMED });
-            History.push('/');
+            dispatch(fetchConsumed());
+            //dispatch({type: ADD_CONSUMED});
+            //History.push('/drinks');
         })
         .catch(err => {
             //dispatch(authError(err.response.data.error));

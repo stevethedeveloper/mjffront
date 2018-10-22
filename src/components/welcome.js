@@ -1,3 +1,3 @@
 import React from 'react';
-
-export default () => <div>Welcome</div>;
+import caffeine from '../img/caffeine.svg'
+export default () => <div class="d-flex justify-content-center"><img src={caffeine} alt="Caffeine Structure" /></div>;

@@ -1,13 +1,12 @@
 import {
-    FETCH_DRINK
+    FETCH_CONSUMED,
 } from '../actions/types';
 
 export const reducer = (state = [], action) => {
-
     switch (action.type) {
-        case FETCH_DRINK:
-            return { ...state, homePageDrinks: action.payload }
-        default:
+      case FETCH_CONSUMED:
+            return { ...state, userConsumed: action.payload}
+      default:
             return state;
     }
 };

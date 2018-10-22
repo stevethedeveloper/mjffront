@@ -34,6 +34,13 @@ class Signup extends PureComponent {
 
         return (
             <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+              <fieldset className="form-group">
+                  <Field
+                      name="user_name"
+                      label="Name"
+                      component={this.renderField}
+                      type="text" />
+              </fieldset>
                 <fieldset className="form-group">
                     <Field
                         name="email"
